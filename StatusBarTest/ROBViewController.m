@@ -10,6 +10,8 @@
 
 @interface ROBViewController ()
 
+- (IBAction)toggleStatusBar:(id)sender;
+
 @end
 
 @implementation ROBViewController
@@ -17,13 +19,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    // the default autoresizingMask is set to stick the view to the bottom of the screen    
+    // this will make the main view stretchy ...
+    self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 }
 
-- (void)didReceiveMemoryWarning
+
+- (IBAction)toggleStatusBar:(id)sender
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    BOOL statusBarHidden = [UIApplication sharedApplication].statusBarHidden;
+    
+    if (statusBarHidden) {
+        [UIApplication sharedApplication].statusBarHidden = NO;
+        self.view.frame = [UIScreen mainScreen].applicationFrame;        
+    } else {
+        [UIApplication sharedApplication].statusBarHidden = YES;
+        self.view.frame = [UIScreen mainScreen].bounds;        
+    }
 }
 
 @end
