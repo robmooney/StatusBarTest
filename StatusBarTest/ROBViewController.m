@@ -16,27 +16,21 @@
 
 @implementation ROBViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    // the default autoresizingMask is set to stick the view to the bottom of the screen    
-    // this will make the main view stretchy ...
-    self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-}
-
-
 - (IBAction)toggleStatusBar:(id)sender
-{
-    
-    BOOL statusBarHidden = [UIApplication sharedApplication].statusBarHidden;
-    
-    if (statusBarHidden) {
-        [UIApplication sharedApplication].statusBarHidden = NO;
-        self.view.frame = [UIScreen mainScreen].applicationFrame;        
+{    
+    if ([UIApplication sharedApplication].statusBarHidden) {
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+        
+        [UIView animateWithDuration:0.4 animations:^{
+            self.view.frame = [UIScreen mainScreen].applicationFrame;
+            [self.view layoutIfNeeded];
+        }];
     } else {
-        [UIApplication sharedApplication].statusBarHidden = YES;
-        self.view.frame = [UIScreen mainScreen].bounds;        
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+        [UIView animateWithDuration:0.3 animations:^{
+            self.view.frame = [UIScreen mainScreen].bounds;
+            [self.view layoutIfNeeded];
+        }];
     }
 }
 
